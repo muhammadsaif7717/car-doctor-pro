@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Footer from "@/components/Shared/Footer";
 import Navbar from "@/components/Shared/Navbar";
+import AuthProvider from "@/Contexts/AuthProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -21,17 +22,21 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  // const pathName=usePathname()
+  // const hideNavFooter= pathName==='dashboard' || pathName==='login' ||pathName==='signup';
   return (
     <html lang="en" data-theme='carDoctorTheme'>
       <head>
-      <link rel="shortcut icon" href="/assets/logo.svg" type="image/x-icon"/>
+        <link rel="shortcut icon" href="/assets/logo.svg" type="image/x-icon" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navbar/>
-        {children}
-        <Footer/>
+        <AuthProvider>
+          <Navbar />
+          {children}
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

@@ -1,4 +1,5 @@
 'use client'
+import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -7,8 +8,10 @@ import { IoIosSearch } from "react-icons/io";
 import { MdOutlineShoppingBag } from "react-icons/md";
 
 const Navbar = () => {
+    const session = useSession();
+    console.log(session)
     const pathName = usePathname();
-    const links = <div className=' font-semibold uppercase flex flex-col lg:flex-row gap-5'>
+    const links = <div className=' font-semibold  flex flex-col lg:flex-row gap-5'>
         <Link href={`/`} className={`${pathName === '/' && 'text-primary'}`}>Home</Link>
         <Link href={`#about`}>About</Link>
         <Link href={`#projects`}>Services</Link>
@@ -16,7 +19,7 @@ const Navbar = () => {
         <Link href={`#contact`}>Contact</Link>
     </div>
     return (
-        <div className='flex justify-center  '>
+        <div className='flex justify-center mt-4 '>
             <div className="navbar flex justify-evenly bg-base-100  bg-opacity-80 fixed max-w-screen-xl mx-auto z-50 py-2">
                 <div className="navbar-start">
                     <div className="dropdown items-center">
@@ -37,9 +40,19 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end gap-5">
-                    <MdOutlineShoppingBag className='text-xl'/>
-                    <IoIosSearch className='text-xl'/>
-                    <button className='btn btn-primary text-white'>Appointment</button>
+                    <MdOutlineShoppingBag className='text-xl' />
+                    <IoIosSearch className='text-xl' />
+                    <button className='btn btn-primary bg-transparent text-red-500 '>Appointment</button>
+                    {
+                        session?.data?.user?.image &&
+                        <Image src={session?.data?.user?.image} height={50} width={50} alt='logo' className='rounded-full' />
+                    }
+                    {
+                        !session.data ?
+                            <Link href={`/login`} className='btn btn-primary text-white bg-blue-500 border-none'>Login</Link>
+                            :
+                            <button onClick={() => signOut()} className='btn btn-primary text-white border-none'>SignOut</button>
+                    }
                 </div>
             </div>
         </div>
