@@ -1,24 +1,24 @@
 "use client";
 import { getServiceDetails } from "@/Services/getServices";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 const Checkout = ({ params }) => {
     const { data } = useSession();
-    const [service, setService] = useState({})
 
-    useEffect(() => {
-        const loadService = async () => {
-            const service = await getServiceDetails(params.id)
-            setService(service)
+
+    const { data: service = [] } = useQuery({
+        queryKey: ['service'],
+        queryFn: async () => {
+            const res = await getServiceDetails(params.id);
+            return res;
         }
-        loadService()
-    }, [params.id])
+    })
 
 
-    const { _id, title, description, img, price, facility } = service;
 
     const handleBooking = async (event) => {
         event.preventDefault();
@@ -28,9 +28,9 @@ const Checkout = ({ params }) => {
             address: event.target.address.value,
             phone: event.target.phone.value,
             date: event.target.date.value,
-            serviceTitle: title,
-            serviceID: _id,
-            price: price,
+            serviceTitle: service.title,
+            serviceID: service._id,
+            price: service.price,
             service: service,
         }
         console.log(newBooking)
@@ -54,7 +54,7 @@ const Checkout = ({ params }) => {
             <div className="relative  h-72">
                 <Image
                     className="absolute h-72 w-full left-0 top-0 object-cover"
-                    src={img}
+                    src={service.img}
                     alt="service"
                     width={1920}
                     height={1080}
@@ -62,7 +62,7 @@ const Checkout = ({ params }) => {
                 />
                 <div className="absolute h-full left-0 top-0 flex items-center justify-center bg-gradient-to-r from-[#151515] to-[rgba(21, 21, 21, 0)] ">
                     <h1 className="text-white text-3xl font-bold flex justify-center items-center ml-8">
-                        Checkout {title}
+                        Checkout {service?.title}
                     </h1>
                 </div>
             </div>
@@ -98,7 +98,7 @@ const Checkout = ({ params }) => {
                                 <span className="label-text">Due amount</span>
                             </label>
                             <input
-                                defaultValue={price}
+                                defaultValue={service?.price}
                                 readOnly
                                 type="text"
                                 name="price"
