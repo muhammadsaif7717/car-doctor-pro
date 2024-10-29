@@ -1,4 +1,6 @@
 import { connectDB } from "@/lib/connectDB";
+import { NextResponse } from "next/server";
+
 
 export const POST = async (request) => {
     try {
@@ -8,7 +10,7 @@ export const POST = async (request) => {
         const bookingsCollection = db.collection('bookings');
 
         const res = await bookingsCollection.insertOne(booking);
-        return Response.json(res);
+        return NextResponse.json(res);
     } catch (error) {
         console.log(error);
     }

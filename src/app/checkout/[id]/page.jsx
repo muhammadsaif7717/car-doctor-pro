@@ -31,7 +31,7 @@ const Checkout = ({ params }) => {
             serviceTitle: title,
             serviceID: _id,
             price: price,
-            ...service, 
+            service: service,
         }
         console.log(newBooking)
 

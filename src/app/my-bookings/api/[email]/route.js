@@ -1,7 +1,7 @@
 import { connectDB } from "@/lib/connectDB";
 
 
-export const GET = async ({ params }) => {
+export const GET = async (request,{ params }) => {
     const db = await connectDB();
     const bookingsCollection = db.collection('bookings');
     try {

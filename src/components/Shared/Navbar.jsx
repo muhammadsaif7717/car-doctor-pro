@@ -8,18 +8,19 @@ import { IoIosSearch } from "react-icons/io";
 import { MdOutlineShoppingBag } from "react-icons/md";
 
 const Navbar = () => {
-    const session = useSession();
+    const session  = useSession();
     console.log(session)
     const pathName = usePathname();
+
     const links = <div className=' font-semibold  flex flex-col lg:flex-row gap-5'>
         <Link href={`/`} className={`${pathName === '/' && 'text-primary'}`}>Home</Link>
         <Link href={`#about`}>About</Link>
         <Link href={`#projects`}>Services</Link>
-        <Link href={`#projects`}>Blog</Link>
+        <Link href={`/my-bookings`} className={`${pathName === '/my-bookings' && 'text-primary'}`}>My Bookings</Link>
         <Link href={`#contact`}>Contact</Link>
     </div>
     return (
-        <div className='flex justify-center mt-4 '>
+        <div className='flex justify-center'>
             <div className="navbar flex justify-evenly bg-base-100  bg-opacity-80 fixed max-w-screen-xl mx-auto z-50 py-2">
                 <div className="navbar-start">
                     <div className="dropdown items-center">
@@ -48,7 +49,7 @@ const Navbar = () => {
                         <Image src={session?.data?.user?.image} height={50} width={50} alt='logo' className='rounded-full' />
                     }
                     {
-                        !session.data ?
+                        !session?.data ?
                             <Link href={`/login`} className='btn btn-primary text-white bg-blue-500 border-none'>Login</Link>
                             :
                             <button onClick={() => signOut()} className='btn btn-primary text-white border-none'>SignOut</button>
