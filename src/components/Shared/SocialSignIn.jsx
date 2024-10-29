@@ -1,30 +1,26 @@
 'use client'
-import React, { useEffect } from 'react';
+import React from 'react';
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa6";
-import { signIn, useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
+import { useSearchParams } from 'next/navigation';
 
 const SocialSignIn = () => {
-    const router = useRouter();
-    const { data: session, status } = useSession();
+    const searchParams = useSearchParams();
+    const path = searchParams.get('redirect');
 
     const handleSocialLogin = async (provider) => {
-        const res = await signIn(provider, { redirect: false });
+        const res = await signIn(provider, {
+            redirect: true,
+            callbackUrl: path ? path : '/'
+        });
 
         if (res?.error) {
             console.error('Error signing in:', res.error);
-        } else if (res?.ok && status === 'authenticated') {
-            router.push('/');
         }
     };
 
 
-    useEffect(() => {
-        if (status === 'authenticated') {
-            router.push('/');
-        }
-    }, [status, router]);
     return (
         <div className="flex gap-5 items-center justify-center">
             <button onClick={() => handleSocialLogin('google')} className='bg-[#F5F5F8] p-4 rounded-full'><FcGoogle /></button>

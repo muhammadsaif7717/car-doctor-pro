@@ -3,12 +3,13 @@ import Image from 'next/image';
 import React from 'react';
 import Link from 'next/link';
 import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import SocialSignIn from '@/components/Shared/SocialSignIn';
 
 
-const page = () => {
-    const router = useRouter();
+const LoginPage = () => {
+    const searchParams = useSearchParams();
+    const path = searchParams.get('redirect');
 
     const handleLogin = async (e) => {
         e.preventDefault()
@@ -16,14 +17,13 @@ const page = () => {
         const email = e.target.email.value;
         const password = e.target.password.value;
 
-        const res = await signIn('credentials', {
+        await signIn('credentials', {
             email,
             password,
             redirect: false,
+            // callbackUrl: path ? path : '/'
         })
-        if (res.status === 200) {
-            router.push('/')
-        }
+
     }
     return (
         <div className='flex flex-col md:flex-row gap-10 items-center justify-between h-screen'>
@@ -111,7 +111,7 @@ const page = () => {
 
                         <div className='flex flex-col gap-5 items-center justify-center'>
                             <h1>Or Sign In with</h1>
-                           <SocialSignIn/>
+                            <SocialSignIn />
                         </div>
 
                         <p className="text-center text-sm text-gray-500">
@@ -125,4 +125,4 @@ const page = () => {
     );
 };
 
-export default page;
+export default LoginPage;

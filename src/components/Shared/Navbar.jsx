@@ -8,14 +8,14 @@ import { IoIosSearch } from "react-icons/io";
 import { MdOutlineShoppingBag } from "react-icons/md";
 
 const Navbar = () => {
-    const session  = useSession();
+    const session = useSession();
     console.log(session)
     const pathName = usePathname();
 
     const links = <div className=' font-semibold  flex flex-col lg:flex-row gap-5'>
         <Link href={`/`} className={`${pathName === '/' && 'text-primary'}`}>Home</Link>
         <Link href={`#about`}>About</Link>
-        <Link href={`#projects`}>Services</Link>
+        <Link href={`/services`} className={`${pathName === '/services' && 'text-primary'}`}>Services</Link>
         <Link href={`/my-bookings`} className={`${pathName === '/my-bookings' && 'text-primary'}`}>My Bookings</Link>
         <Link href={`#contact`}>Contact</Link>
     </div>

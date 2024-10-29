@@ -1,5 +1,6 @@
 import { connectDB } from "@/lib/connectDB";
 import { ObjectId } from "mongodb";
+import { NextResponse } from "next/server";
 
 
 export const GET = async (request, { params }) => {
@@ -7,7 +8,7 @@ export const GET = async (request, { params }) => {
     const bookingsCollection = db.collection('bookings');
     try {
         const res = await bookingsCollection.findOne({ _id: new ObjectId(params.id) });
-        return Response.json({ data: res });
+        return NextResponse.json({ data: res });
     } catch (error) {
         console.log(error);
     }
