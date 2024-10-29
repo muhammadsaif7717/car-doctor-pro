@@ -1,5 +1,5 @@
 'use client'
-import React from 'react';
+import React, { Suspense } from 'react';
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa6";
 import { signIn } from 'next-auth/react';
@@ -29,4 +29,10 @@ const SocialSignIn = () => {
     );
 };
 
-export default SocialSignIn;
+const Page = () => (
+    <Suspense fallback={<div>Loading...</div>}>
+        <SocialSignIn />
+    </Suspense>
+);
+
+export default Page;

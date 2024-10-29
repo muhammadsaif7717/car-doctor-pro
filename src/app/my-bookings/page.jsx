@@ -26,7 +26,7 @@ const MyBookings = () => {
 
  
     const handleDelete = async (id) => {
-        const res = await axios.delete(`http://localhost:3000/my-bookings/api/delete-booking/${id}`)
+        const res = await axios.delete(`https://car-doctor-pro-five.vercel.app/my-bookings/api/delete-booking/${id}`)
         if (res.data.deletedCount > 0) {
             alert('Deleted')
             refetch();
@@ -55,7 +55,7 @@ const MyBookings = () => {
                                 <p><span className="font-bold">Address: </span>{booking.address}</p>
                                 <p><span className="font-bold">Price: </span>${booking.price}</p>
                                 <div className="card-actions">
-                                    <Link href={`http://localhost:3000/my-bookings/update-booking/${booking._id}`}  className="btn btn-primary bg-blue-500 border-none text-white">Edit</Link>
+                                    <Link href={`https://car-doctor-pro-five.vercel.app/my-bookings/update-booking/${booking._id}`}  className="btn btn-primary bg-blue-500 border-none text-white">Edit</Link>
                                     <button onClick={() => handleDelete(booking._id)} className="btn btn-primary border-none text-white">Delete</button>
                                 </div>
                             </div>

@@ -1,10 +1,20 @@
 import axios from "axios";
 
-export  const getServices = async () => {
-    const res = await axios.get('http://localhost:3000/services/api/get-all')
-    return res.data;
+export const getServices = async () => {
+    try {
+        const res = await axios.get('https://car-doctor-pro-five.vercel.app/services/api/get-all')
+        return res.data;
+    } catch (error) {
+        console.log(error)
+        return [];
+    }
 }
 export const getServiceDetails = async (id) => {
-    const res = await axios.get(`http://localhost:3000/services/api/${id}`)
-    return res.data;
+    try {
+        const res = await axios.get(`https://car-doctor-pro-five.vercel.app/services/api/${id}`)
+        return res.data;
+    } catch (error) {
+        console.log(error)
+        return [];
+    }
 }

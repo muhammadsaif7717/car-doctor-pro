@@ -36,7 +36,7 @@ const Checkout = ({ params }) => {
         console.log(newBooking)
 
         try {
-            const res = await axios.post("http://localhost:3000/checkout/api/new-booking", newBooking);
+            const res = await axios.post("https://car-doctor-pro-five.vercel.app/checkout/api/new-booking", newBooking);
             if (res.data) {
                 alert(res.data?.message || "Booking successful");
                 event.target.reset();

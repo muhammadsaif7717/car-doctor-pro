@@ -1,13 +1,13 @@
 'use client'
 import Image from 'next/image';
-import React from 'react';
+import React, { Suspense } from 'react';
 import Link from 'next/link';
 import { signIn } from 'next-auth/react';
 import { useSearchParams } from 'next/navigation';
 import SocialSignIn from '@/components/Shared/SocialSignIn';
 
 
-const LoginPage = () => {
+const LoginPage  = () => {
     const searchParams = useSearchParams();
     const path = searchParams.get('redirect');
 
@@ -20,8 +20,8 @@ const LoginPage = () => {
         await signIn('credentials', {
             email,
             password,
-            redirect: false,
-            // callbackUrl: path ? path : '/'
+            redirect: true,
+            callbackUrl: path ? path : '/'
         })
 
     }
@@ -125,4 +125,11 @@ const LoginPage = () => {
     );
 };
 
-export default LoginPage;
+const Page = () => (
+    <Suspense fallback={<div>Loading...</div>}>
+        <LoginPage />
+    </Suspense>
+);
+
+export default Page;
+

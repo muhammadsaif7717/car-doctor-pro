@@ -1,11 +1,11 @@
 'use client'
 import Image from 'next/image';
-import React from 'react';
+import React, { Suspense } from 'react';
 import Link from 'next/link';
 import axios from 'axios';
 import SocialSignIn from '@/components/Shared/SocialSignIn';
 
-const page = () => {
+const SignUp = () => {
     const handleSignUp = async(e) => {
         e.preventDefault()
         const newUser = {
@@ -14,7 +14,7 @@ const page = () => {
             password: e.target.password.value,
         }
 
-        const res = await axios.post('http://localhost:3000/signup/api', newUser)
+        const res = await axios.post('https://car-doctor-pro-five.vercel.app/signup/api', newUser)
         if(res.data.insertedId)(
             alert('user created')
         )
@@ -149,4 +149,5 @@ const page = () => {
     );
 };
 
-export default page;
+
+export default SignUp;

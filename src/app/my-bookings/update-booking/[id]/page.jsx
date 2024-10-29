@@ -12,7 +12,7 @@ const UpdateBooking = ({ params }) => {
     const { data: booking = [], refetch } = useQuery({
         queryKey: ['booking', id],
         queryFn: async () => {
-            const res = await axios.get(`http://localhost:3000/my-bookings/api/get-bookings-by-id/${id}`);
+            const res = await axios.get(`https://car-doctor-pro-five.vercel.app/my-bookings/api/get-bookings-by-id/${id}`);
             return res.data.data;
         }
     });
@@ -28,7 +28,7 @@ const UpdateBooking = ({ params }) => {
         }
         console.log(updatedData)
 
-        const res = await axios.patch(`http://localhost:3000/my-bookings/api/update-booking/${id}`, updatedData)
+        const res = await axios.patch(`https://car-doctor-pro-five.vercel.app/my-bookings/api/update-booking/${id}`, updatedData)
         if (res.data.modifiedCount > 0) {
             alert('updated');
             refetch();

@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 export const middleware = async (request) => {
-    const token = (await cookies(request)).get('next-auth.session-token'); // Ensure this matches your cookie key
+    const token = (await cookies(request)).get('__secure-next-auth.session-token'); // Ensure this matches your cookie key
     const pathname = request.nextUrl.pathname;
 
     console.log("Token:", token);
